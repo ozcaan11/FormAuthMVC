@@ -3,27 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using FormAuthMVC.Models;
 
-namespace FormAuthMVC.Controllers
+namespace AuthDemo.Controllers
 {
     public class HomeController : Controller
     {
+        mydb db = new mydb();
+
         public ActionResult Index()
         {
+            return View(db.Students.ToList());
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult Admin()
+        {
             return View();
         }
 
-        public ActionResult About()
+        [Authorize(Roles = "Vip")]
+        public ActionResult Vip()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
-        public ActionResult Contact()
+        [Authorize(Roles = "Admin,Vip")]
+        public ActionResult AdminVip()
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
     }
